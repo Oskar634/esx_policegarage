@@ -34,7 +34,7 @@ CreateThread(function()
         local pcoords = GetEntityCoords(ped)
         for k, v in pairs(Config.Tallit) do
             if #(pcoords - v.Spawn) < 10 then
-				wait = 0
+		wait = 0
                 if ESX.PlayerData.job.name == "police" and not isDead then
 					DrawMarker(1, v.Spawn.x, v.Spawn.y, v.Spawn.z - 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5, 1.5, 0.5, 255, 255, 255, 0.05, 0, 0, 0, 0, 0, 0, 0)
                     if #(pcoords - v.Spawn) < 1.0 then
@@ -47,7 +47,7 @@ CreateThread(function()
                 end
             end
         end
-		Wait(wait)
+	Wait(wait)
     end
 end)
 
@@ -59,7 +59,7 @@ CreateThread(function()
         for k, v in pairs(Config.Tallit) do
             if #(pcoords - v.Poista) < 10 then
                 if not isDead and inVehicle then
-					wait = 0
+		wait = 0
                     DrawMarker(1, v.Poista.x, v.Poista.y, v.Poista.z - 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5, 1.5, 0.5, 255, 255, 255, 0.05, 0, 0, 0, 0, 0, 0, 0)
                     if #(pcoords - v.Poista) < 1.0 and ESX.PlayerData.job.name == "police" then
                         ESX.ShowHelpNotification("~INPUT_PICKUP~ Poista ajoneuvo")
@@ -70,7 +70,7 @@ CreateThread(function()
                 end
             end
         end
-		Wait(wait)
+	Wait(wait)
     end
 end)
 
