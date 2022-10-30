@@ -3,8 +3,7 @@ local inVehicle = false
 
 ESX = nil
 
-Citizen.CreateThread(
-    function()
+Citizen.CreateThread(function()
         while ESX == nil do
             TriggerEvent("esx:getSharedObject", function(obj)
             ESX = obj
