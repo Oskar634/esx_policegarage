@@ -34,7 +34,7 @@ CreateThread(function()
             if #(pcoords - v.Spawn) < 10 then
 		wait = 0
                 if ESX.PlayerData.job.name == "police" and not isDead then
-					DrawMarker(1, v.Spawn.x, v.Spawn.y, v.Spawn.z - 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5, 1.5, 0.5, 255, 255, 255, 0.05, 0, 0, 0, 0, 0, 0, 0)
+		    DrawMarker(1, v.Spawn.x, v.Spawn.y, v.Spawn.z - 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5, 1.5, 0.5, 255, 255, 255, 0.05, 0, 0, 0, 0, 0, 0, 0)
                     if #(pcoords - v.Spawn) < 1.0 then
                         ESX.ShowHelpNotification("~INPUT_PICKUP~ Avaa autotalli")
                         if IsControlJustReleased(0, 38) then
