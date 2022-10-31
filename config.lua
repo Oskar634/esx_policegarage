@@ -4,7 +4,7 @@ Config.Tallit = {
     [1] = {
         Spawn = vec3(458.72, -1017.12, 28.1),
         Poista = vec3(449.52, -1017.90, 28.52),
-        SpawnCoordit = vec3(445.92, -1024.45, 28.52, 107)
+        SpawnCoordit = vec3(445.92, -1024.45, 28.52)
     },
 
     [2] = {
