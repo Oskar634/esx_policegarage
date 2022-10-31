@@ -1,29 +1,7 @@
 local isDead = false
 local inVehicle = false
 
-ESX = nil
-CreateThread(function()
-        while ESX == nil do
-            TriggerEvent("esx:getSharedObject", function(obj)
-            ESX = obj
-            end)
-        Wait(0)
-    end
-    while ESX.GetPlayerData().job == nil do
-        Wait(10)
-    end
-    PlayerData = ESX.GetPlayerData()
-end)
-
-RegisterNetEvent("esx:playerLoaded")
-AddEventHandler("esx:playerLoaded", function(xPlayer)
-    ESX.PlayerData = xPlayer
-end)
-
-RegisterNetEvent("esx:setJob")
-AddEventHandler("esx:setJob", function(job)
-    ESX.PlayerData.job = job
-end)
+ESX = exports["es_extended"]:getSharedObject()
 
 CreateThread(function()
     while true do
@@ -55,11 +33,11 @@ CreateThread(function()
         local ped = PlayerPedId()
         local pcoords = GetEntityCoords(ped)
         for k, v in pairs(Config.Tallit) do
-            if #(pcoords - v.Poista) < 10 then
+            if #(pcoords - v.Poista) < 10 and ESX.PlayerData.job.name == "police" then
                 if not isDead and inVehicle then
 		    wait = 0
                     DrawMarker(1, v.Poista.x, v.Poista.y, v.Poista.z - 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5, 1.5, 0.5, 255, 255, 255, 0.05, 0, 0, 0, 0, 0, 0, 0)
-                    if #(pcoords - v.Poista) < 1.0 and ESX.PlayerData.job.name == "police" then
+                    if #(pcoords - v.Poista) < 1.0 then
                         ESX.ShowHelpNotification("~INPUT_PICKUP~ Poista ajoneuvo")
                         if IsControlJustReleased(0, 38) then
                             PoistaAjoneuvo()
