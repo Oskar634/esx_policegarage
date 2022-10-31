@@ -17,7 +17,8 @@ CreateThread(function()
                         ESX.ShowHelpNotification("~INPUT_PICKUP~ Avaa autotalli")
                         if IsControlJustReleased(0, 38) then
                             local spawncoords = v.SpawnCoordit
-                            AvaaTalli(spawncoords)
+                            local heading = v.Heading
+                            AvaaTalli(spawncoords, heading)
                         end
                     end
                 end
@@ -65,7 +66,7 @@ function PoistaAjoneuvo()
     ESX.Game.DeleteVehicle(vehicle)
 end
 
-function AvaaTalli(spawncoords)
+function AvaaTalli(spawncoords, heading)
     ESX.UI.Menu.CloseAll()
 
     ESX.UI.Menu.Open("default", GetCurrentResourceName(), "autotallimenu",
@@ -77,7 +78,8 @@ function AvaaTalli(spawncoords)
         function(data, menu)
             ESX.UI.Menu.CloseAll()
             local model = data.current.value
-            ESX.Game.SpawnVehicle(model, spawncoords, 0, function(vehicle) end)
+            ESX.Game.SpawnVehicle(model, spawncoords, heading, function(vehicle)
+            end)
         end,
         function(data, menu)
             menu.close()
