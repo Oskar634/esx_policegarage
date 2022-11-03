@@ -51,12 +51,12 @@ CreateThread(function()
     end
 end)
 
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
         local ped = PlayerPedId()
         isDead = IsPedDeadOrDying(ped)
         inVehicle = IsPedInAnyVehicle(ped, true)
-        Citizen.Wait(500)
+        Wait(500)
     end
 end)
 
