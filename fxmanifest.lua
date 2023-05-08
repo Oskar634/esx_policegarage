@@ -2,7 +2,7 @@ fx_version 'cerulean'
 game 'gta5'
 
 author 'Oskar#2222'
-description 'ESX Poliisi talli'
+description 'ESX Police garage'
 version '1.0.0'
 
 client_scripts {
