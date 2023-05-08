@@ -1,6 +1,3 @@
-local isDead = false
-local inVehicle = false
-
 ESX = exports["es_extended"]:getSharedObject()
 
 CreateThread(function()
@@ -8,17 +5,17 @@ CreateThread(function()
         local wait = 1000
         local ped = PlayerPedId()
         local pcoords = GetEntityCoords(ped)
-        for k, v in pairs(Config.Tallit) do
+        for k, v in pairs(Config.Garages) do
             if #(pcoords - v.Spawn) < 10 then
 		    wait = 0
-                if ESX.PlayerData.job.name == "police" and not isDead then
+                if ESX.PlayerData.job.name == "police" and not IsPedDeadOrDying(ped) then
 		        DrawMarker(1, v.Spawn.x, v.Spawn.y, v.Spawn.z - 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5, 1.5, 0.5, 255, 255, 255, 0.05, 0, 0, 0, 0, 0, 0, 0)
                     if #(pcoords - v.Spawn) < 1.0 then
-                        ESX.ShowHelpNotification("~INPUT_PICKUP~ Avaa autotalli")
+                        ESX.ShowHelpNotification("~INPUT_PICKUP~ Open garage")
                         if IsControlJustReleased(0, 38) then
-                            local spawncoords = v.SpawnCoordit
+                            local spawncoords = v.SpawnCoords
                             local heading = v.Heading
-                            AvaaTalli(spawncoords, heading)
+                            OpenGarage(spawncoords, heading)
                         end
                     end
                 end
@@ -33,15 +30,15 @@ CreateThread(function()
         local wait = 1000
         local ped = PlayerPedId()
         local pcoords = GetEntityCoords(ped)
-        for k, v in pairs(Config.Tallit) do
-            if #(pcoords - v.Poista) < 10 and ESX.PlayerData.job.name == "police" then
-                if not isDead and inVehicle then
+        for k, v in pairs(Config.Garages) do
+            if #(pcoords - v.Remove) < 10 and ESX.PlayerData.job.name == "police" then
+                if not IsPedDeadOrDying(ped) and not IsPedInAnyVehicle(ped, true) then
 		        wait = 0
-                DrawMarker(1, v.Poista.x, v.Poista.y, v.Poista.z - 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5, 1.5, 0.5, 255, 255, 255, 0.05, 0, 0, 0, 0, 0, 0, 0)
-                    if #(pcoords - v.Poista) < 1.0 then
-                        ESX.ShowHelpNotification("~INPUT_PICKUP~ Poista ajoneuvo")
+                DrawMarker(1, v.Remove.x, v.Remove.y, v.Remove.z - 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5, 1.5, 0.5, 255, 255, 255, 0.05, 0, 0, 0, 0, 0, 0, 0)
+                    if #(pcoords - v.Remove) < 1.0 then
+                        ESX.ShowHelpNotification("~INPUT_PICKUP~ Remove vehicle")
                         if IsControlJustReleased(0, 38) then
-                            PoistaAjoneuvo()
+                            RemoveVehicle()
                         end
                     end
                 end
@@ -51,29 +48,20 @@ CreateThread(function()
     end
 end)
 
-CreateThread(function()
-    while true do
-        local ped = PlayerPedId()
-        isDead = IsPedDeadOrDying(ped)
-        inVehicle = IsPedInAnyVehicle(ped, true)
-        Wait(500)
-    end
-end)
-
-function PoistaAjoneuvo()
+function RemoveVehicle()
     local ped = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(ped)
     ESX.Game.DeleteVehicle(vehicle)
 end
 
-function AvaaTalli(spawncoords, heading)
+function OpenGarage(spawncoords, heading)
     ESX.UI.Menu.CloseAll()
 
-    ESX.UI.Menu.Open("default", GetCurrentResourceName(), "autotallimenu",
+    ESX.UI.Menu.Open("default", GetCurrentResourceName(), "garagemenu",
         {
-            title = "Poliisi talli",
+            title = "Police garage",
             align = "top-right",
-            elements = Config.Ajoneuvot
+            elements = Config.Vehicles
         },
         function(data, menu)
             ESX.UI.Menu.CloseAll()
